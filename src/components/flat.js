@@ -3,7 +3,7 @@ import "./flat.css";
 
 class Flat extends React.Component {
   render() {
-    const title = this.props.flat.currency + this.props.flat.price +
+    const title = this.props.flat.priceCurrency + this.props.flat.price +
     " - " + this.props.flat.name;
 
     const style = {
@@ -15,6 +15,7 @@ class Flat extends React.Component {
         <div className="flat-picture" style={style}>
         </div>
         <div className="flat-title">
+          {title}
         </div>
       </div>
     )
