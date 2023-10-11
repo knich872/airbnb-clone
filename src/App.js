@@ -9,6 +9,7 @@ class App extends Component {
     super(props);
     this.state = {
       flats: [],
+      allFlats: [],
       selectedFlat: null,
       search: ""
     };
@@ -19,7 +20,8 @@ class App extends Component {
     fetch(url).then(response => response.json())
     .then((data) => {
       this.setState({
-        flats: data
+        flats: data,
+        allFlats: data
       });
     })
   };
@@ -33,7 +35,7 @@ class App extends Component {
   handleSearch = (event) => {
     this.setState({
       search: event.target.value,
-      flats: []
+      flats: this.state.allFlats.filter((flat) => new RegExp(event.target.value, "i").exec(flat))
     })
   }
 
