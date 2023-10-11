@@ -9,7 +9,8 @@ class App extends Component {
     super(props);
     this.state = {
       flats: [],
-      selectedFlat: null
+      selectedFlat: null,
+      search: ""
     };
   }
 
@@ -17,7 +18,6 @@ class App extends Component {
     const url = "https://raw.githubusercontent.com/lewagon/flats-boilerplate/master/flats.json";
     fetch(url).then(response => response.json())
     .then((data) => {
-      console.log(data);
       this.setState({
         flats: data
       });
@@ -25,10 +25,16 @@ class App extends Component {
   };
 
   selectFlat = (flat) => {
-    console.log(flat);
     this.setState({
       selectedFlat: flat
-  })
+    })
+  }
+
+  handleSearch = (event) => {
+    this.setState({
+      search: event.target.value,
+      flats: []
+    })
   }
 
   render() {
@@ -47,6 +53,11 @@ class App extends Component {
       <div className="app">
         <div className="main">
           <div className="search">
+            <input
+              type='text'
+              placeholder='Search...'
+              value={this.state.search}
+              onChange={this.handleSearch}/>
             <div className="flats">
               {this.state.flats.map((flat) => {
                 return < Flat key={flat.name}
@@ -63,7 +74,12 @@ class App extends Component {
             defaultZoom={11}
           >
             {this.state.flats.map((flat) => {
-              return < Marker key={flat.name} lat={flat.lat} lng={flat.lng} text={flat.price} />
+              return < Marker
+              key={flat.name}
+              lat={flat.lat}
+              lng={flat.lng}
+              text={flat.price}
+              selected={flat === this.state.selectedFlat} />
             })}
           </GoogleMapReact>
         </div>
